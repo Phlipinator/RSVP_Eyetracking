@@ -5,7 +5,8 @@ using UnityEngine;
 public static class DataScript
 {
     private static float dilation_L;
-    private static float dilation_R;  
+    private static float dilation_R;
+    private static Vector3 averageGazeDirection;  
 
     public static float Dilation_L
     {
@@ -30,6 +31,20 @@ public static class DataScript
         set
         {
             dilation_R = value;
+        }
+    }
+
+    
+    public static Vector3 AverageGazeDirection
+    {
+        get
+        {
+            return averageGazeDirection;
+        }
+
+        set
+        {
+            averageGazeDirection = value;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // This Script was found here:
 // https://forum.htc.com/topic/9341-vive-eye-tracking-at-120hz/
 
-public class PupilDilationReader : MonoBehaviour
+public class EyeDataReader : MonoBehaviour
 {
     private static EyeData eyeData = new EyeData();
     private static bool eye_callback_registered = false;
@@ -78,15 +78,27 @@ public class PupilDilationReader : MonoBehaviour
 
 
         // Print the pupil diameter values to the console
-        if (leftPupilDiameter != -1){
+        if (leftPupilDiameter != -1)
+        {
             //Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
             DataScript.Dilation_L = leftPupilDiameter;
         }
-        
-        if (rightPupilDiameter != -1){
+
+        if (rightPupilDiameter != -1)
+        {
             //Debug.Log("Right Pupil Diameter: " + rightPupilDiameter);
             DataScript.Dilation_R = rightPupilDiameter;
         }
+
+        // Retrieve the average gaze direction from both eyes
+        Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) * 0.5f;
+
+        if (gazeDirection != Vector3.zero)
+        {
+            Debug.Log("Gaze Direction: " + gazeDirection);
+            DataScript.AverageGazeDirection = gazeDirection;
+        }
+
 
     }
 }

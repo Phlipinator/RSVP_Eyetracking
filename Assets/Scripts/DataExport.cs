@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DataExport : MonoBehaviour
 {
     public int participant_ID;
-    
+
     private string activeScene;
     private string filename;
 
@@ -57,8 +57,6 @@ public class DataExport : MonoBehaviour
             string dataLine = string.Join(",", data);
             writer.WriteLine(dataLine);
         }
-
-        Debug.Log("Data appended to CSV file: " + filePath);
     }
 
     private string GetFilePath(string filename)

@@ -1,71 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DataExport : MonoBehaviour
 {
-
     public int participant_ID;
-
-    private List<string[]> rowData = new List<string[]>();
+    
     private string activeScene;
+    private string filename;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Add headers to the CSV file
-        AddDataToRow("Participant_ID", "scene", "pupilDilation_L", "pupilDilation_R");
-
         // Initialize active Scene Name
         activeScene = SceneManager.GetActiveScene().name;
 
-        // Export the data to a CSV file
-        ExportToCSV("Participant_" + participant_ID + ".csv");
-    }
+        // Set the filename based on the participant ID
+        filename = "Participant_" + participant_ID + ".csv";
 
-    private void AddDataToRow(params string[] values)
-    {
-        rowData.Add(values);
-    }
-
-     private void ExportToCSV(string filename)
-    {
-        string delimiter = ",";
-
-        // Create the directory path if it doesn't exist
-        string directoryPath = Application.dataPath + "/CSV/";
-        if (!Directory.Exists(directoryPath))
-            Directory.CreateDirectory(directoryPath);
-
-        // Combine the directory path and filename
-        string filePath = Path.Combine(directoryPath, filename);
-
-        // Check if the file already exists
-        bool fileExists = File.Exists(filePath);
-
-        // Append or create a new file
-        using (StreamWriter writer = new StreamWriter(filePath, append: fileExists))
+        // Create the CSV file if it doesn't exist and write the headers
+        if (!File.Exists(GetFilePath(filename)))
         {
-            // If the file doesn't exist, write headers first
-            if (!fileExists)
-            {
-                string headerLine = string.Join(delimiter, rowData[0]);
-                writer.WriteLine(headerLine);
-            }
-
-            // Write data to CSV file
-            for (int i = 1; i < rowData.Count; i++)
-            {
-                string dataLine = string.Join(delimiter, rowData[i]);
-                writer.WriteLine(dataLine);
-            }
+            string[] headers = { "Participant_ID", "scene", "pupilDilation_L", "pupilDilation_R" };
+            AppendToCSV(filename, headers);
         }
-
-        Debug.Log("CSV file exported to: " + filePath);
     }
-
 
     // Update is called once per frame
     void Update()
@@ -74,9 +34,41 @@ public class DataExport : MonoBehaviour
         string dilation_L = DataScript.Dilation_L.ToString().Replace(",", ".");
         string dilation_R = DataScript.Dilation_R.ToString().Replace(",", ".");
 
-        AddDataToRow(participant_ID.ToString(), activeScene, dilation_L, dilation_R);
+        // Create a string array with the data to append
+        string[] data = {
+            participant_ID.ToString(),
+            activeScene,
+            dilation_L,
+            dilation_R
+        };
 
-        // Export the data to a CSV file
-        ExportToCSV("Participant_" + participant_ID + ".csv");
+        // Append the data to the CSV file
+        AppendToCSV(filename, data);
+    }
+
+    private void AppendToCSV(string filename, string[] data)
+    {
+        // Combine the directory path and filename
+        string filePath = GetFilePath(filename);
+
+        // Append the data to the CSV file
+        using (StreamWriter writer = File.AppendText(filePath))
+        {
+            string dataLine = string.Join(",", data);
+            writer.WriteLine(dataLine);
+        }
+
+        Debug.Log("Data appended to CSV file: " + filePath);
+    }
+
+    private string GetFilePath(string filename)
+    {
+        // Create the directory path if it doesn't exist
+        string directoryPath = Path.Combine(Application.dataPath, "CSV");
+        if (!Directory.Exists(directoryPath))
+            Directory.CreateDirectory(directoryPath);
+
+        // Combine the directory path and filename
+        return Path.Combine(directoryPath, filename);
     }
 }

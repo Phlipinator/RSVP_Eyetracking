@@ -79,12 +79,12 @@ public class PupilDilationReader : MonoBehaviour
 
         // Print the pupil diameter values to the console
         if (leftPupilDiameter != -1){
-            Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
+            //Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
             DataScript.Dilation_L = leftPupilDiameter;
         }
         
         if (rightPupilDiameter != -1){
-            Debug.Log("Right Pupil Diameter: " + rightPupilDiameter);
+            //Debug.Log("Right Pupil Diameter: " + rightPupilDiameter);
             DataScript.Dilation_R = rightPupilDiameter;
         }
 

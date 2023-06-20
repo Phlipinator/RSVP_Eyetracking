@@ -9,6 +9,7 @@ public class Simple_RSVP : MonoBehaviour
 {
     public TMP_Text display;
     public int speed;
+    public int startPause;
 
     private string[] inputArray;
     private float pauseInterval;
@@ -17,7 +18,7 @@ public class Simple_RSVP : MonoBehaviour
     {
         readTextFile("test.txt");
 
-        // Convert words per minute inrto seconds between words
+        // Convert words per minute into seconds between words
         pauseInterval = 1/(speed/60f);
         Debug.Log("Current Pause Interval: " + pauseInterval);
 
@@ -26,6 +27,9 @@ public class Simple_RSVP : MonoBehaviour
     }
 
     IEnumerator  RSVP_Display(){
+        // Wait before start
+        yield return new WaitForSeconds(startPause);
+
         foreach (var word in inputArray)
         {
             display.text = word;
@@ -42,9 +46,8 @@ public class Simple_RSVP : MonoBehaviour
 
         while (!inp_stm.EndOfStream)
         {
-            string inputPhrase = inp_stm.ReadLine();
-            // Do Something with the input. 
-
+            string inputPhrase = inp_stm.ReadLine(); 
+            
             inputArray = inputPhrase.Split(' ');
         }
 

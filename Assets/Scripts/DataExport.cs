@@ -22,7 +22,7 @@ public class DataExport : MonoBehaviour
         // Create the CSV file if it doesn't exist and write the headers
         if (!File.Exists(GetFilePath(filename)))
         {
-            string[] headers = { "Participant_ID", "scene", "pupilDilation_L", "pupilDilation_R" };
+            string[] headers = { "Participant_ID", "scene", "pupilDilation_L", "pupilDilation_R", "gazePosition" };
             AppendToCSV(filename, headers);
         }
     }
@@ -39,7 +39,8 @@ public class DataExport : MonoBehaviour
             participant_ID.ToString(),
             activeScene,
             dilation_L,
-            dilation_R
+            dilation_R,
+            DataScript.HitPoint.ToString()
         };
 
         // Append the data to the CSV file

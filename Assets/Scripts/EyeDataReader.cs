@@ -76,8 +76,7 @@ public class EyeDataReader : MonoBehaviour
         float leftPupilDiameter = eyeData.verbose_data.left.pupil_diameter_mm;
         float rightPupilDiameter = eyeData.verbose_data.right.pupil_diameter_mm;
 
-
-        // Print the pupil diameter values to the console
+        // Check if diameter is not zero and write to DataScript
         if (leftPupilDiameter != -1)
         {
             //Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
@@ -91,14 +90,26 @@ public class EyeDataReader : MonoBehaviour
         }
 
         // Retrieve the average gaze direction from both eyes
-        Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) * 0.5f;
+        Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) / 2;
 
+        // Check if direction is not 0 and write to DataScript
         if (gazeDirection != Vector3.zero)
         {
-            Debug.Log("Gaze Direction: " + gazeDirection);
-            DataScript.AverageGazeDirection = gazeDirection;
+            //Debug.Log("Gaze Direction: " + gazeDirection);
+            //DataScript.AverageGazeDirection = gazeDirection;
+            DataScript.AverageGazeDirection = eyeData.verbose_data.right.gaze_direction_normalized;
         }
 
+        // Get average gazeOrigin
+        Vector3 gazeOrigin = (eyeData.verbose_data.left.gaze_origin_mm + eyeData.verbose_data.right.gaze_origin_mm) / 2;
+
+        // Check if gazeOrigin is not 0 and write it to DataScript in meters
+        if (gazeOrigin != Vector3.zero)
+        {
+            //Debug.Log("Gaze Origin: " + gazeOrigin);
+            //DataScript.GazeOrigin = gazeOrigin / 1000;
+            DataScript.GazeOrigin = eyeData.verbose_data.right.gaze_origin_mm / 1000;
+        }
 
     }
 }

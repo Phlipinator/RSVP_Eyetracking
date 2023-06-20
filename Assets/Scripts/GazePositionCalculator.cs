@@ -5,36 +5,40 @@ using UnityEngine;
 public class GazePositionCalculator : MonoBehaviour
 {
     public GameObject gazeTarget;
-    public GameObject pointerCube;
+    public GameObject pointer;
+    public bool showPointer;
 
-    private Plane targetPlane;
-    private Vector3 distanceFromCamera;
+    private float distanceFromCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        //This is how far away from the Camera the plane is placed
-        distanceFromCamera = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z - gazeTarget.transform.position.z);
+        // How far the text is from the camera
+        distanceFromCamera = gazeTarget.transform.position.z;
 
-        //Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
-        targetPlane = new Plane(Vector3.forward, distanceFromCamera);
     }
 
     void Update()
     {
-        //Create a ray from the Mouse click position
-        Ray ray = Camera.main.ScreenPointToRay(DataScript.AverageGazeDirection);
-
-        //Initialise the enter variable
-        float enter = 0.0f;
-
-        if (targetPlane.Raycast(ray, out enter))
+        // Avoids division with 0
+        if (DataScript.AverageGazeDirection.z != 0)
         {
-            //Get the point that is clicked
-            Vector3 hitPoint = ray.GetPoint(enter);
+            // Calculating Collision of Gaze Vector with the Text-Plane
 
-            //Move your cube GameObject to the point where you clicked
-            pointerCube.transform.position = hitPoint;
+            float rValue = (distanceFromCamera - DataScript.GazeOrigin.z) / DataScript.AverageGazeDirection.z;
+
+            Vector3 hitPoint = DataScript.GazeOrigin + rValue * DataScript.AverageGazeDirection;
+
+            // Correct for mirroring
+            hitPoint.x = hitPoint.x * -1;
+
+
+            if (showPointer)
+            {
+                pointer.transform.position = hitPoint;
+            }
+
+            DataScript.HitPoint = hitPoint;
         }
     }
 }

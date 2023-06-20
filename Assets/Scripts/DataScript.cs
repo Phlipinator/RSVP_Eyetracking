@@ -7,6 +7,8 @@ public static class DataScript
     private static float dilation_L;
     private static float dilation_R;
     private static Vector3 averageGazeDirection;  
+    private static Vector3 gazeOrigin;
+    private static Vector3 hitPoint;
 
     public static float Dilation_L
     {
@@ -45,6 +47,32 @@ public static class DataScript
         set
         {
             averageGazeDirection = value;
+        }
+    }
+
+     public static Vector3 GazeOrigin
+    {
+        get
+        {
+            return gazeOrigin;
+        }
+
+        set
+        {
+            gazeOrigin = value;
+        }
+    }
+
+       public static Vector3 HitPoint
+    {
+        get
+        {
+            return hitPoint;
+        }
+
+        set
+        {
+            hitPoint = value;
         }
     }
 }

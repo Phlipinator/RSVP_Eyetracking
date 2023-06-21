@@ -89,27 +89,61 @@ public class EyeDataReader : MonoBehaviour
             DataScript.Dilation_R = rightPupilDiameter;
         }
 
-        // Retrieve the average gaze direction from both eyes
-        Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) / 2;
 
-        // Check if direction is not 0 and write to DataScript
-        if (gazeDirection != Vector3.zero)
+        // Allows switching between Avergae Eye Data or left/right
+        switch (DataScript.CalculationMethod)
         {
-            //Debug.Log("Gaze Direction: " + gazeDirection);
-            //DataScript.AverageGazeDirection = gazeDirection;
-            DataScript.AverageGazeDirection = eyeData.verbose_data.right.gaze_direction_normalized;
+            case "A":
+                // Retrieve the average gaze direction from both eyes
+                Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) / 2;
+
+                if (gazeDirection != Vector3.zero)
+                {
+                    DataScript.GazeDirection = gazeDirection;
+                }
+
+                // Get average gazeOrigin
+                Vector3 gazeOrigin = (eyeData.verbose_data.left.gaze_origin_mm + eyeData.verbose_data.right.gaze_origin_mm) / 2;
+
+                if (gazeOrigin != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin;
+                }
+                break;
+
+            case "L":
+                Vector3 gazeDirection_L = eyeData.verbose_data.left.gaze_direction_normalized;
+
+                if (gazeDirection_L != Vector3.zero){
+                    DataScript.GazeDirection = gazeDirection_L;
+                }
+
+                Vector3 gazeOrigin_L = eyeData.verbose_data.left.gaze_origin_mm / 1000;
+
+                if (gazeOrigin_L != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin_L;
+                }
+                break;
+
+            case "R":
+                Vector3 gazeDirection_R = eyeData.verbose_data.right.gaze_direction_normalized;
+
+                if (gazeDirection_R != Vector3.zero){
+                    DataScript.GazeDirection = gazeDirection_R;
+                }
+
+                Vector3 gazeOrigin_R = eyeData.verbose_data.right.gaze_origin_mm / 1000;
+
+                if (gazeOrigin_R != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin_R;
+                }
+                break;
+                
+            default:
+                Debug.Log("Error: No calculation Method selected!");
+                break;
         }
-
-        // Get average gazeOrigin
-        Vector3 gazeOrigin = (eyeData.verbose_data.left.gaze_origin_mm + eyeData.verbose_data.right.gaze_origin_mm) / 2;
-
-        // Check if gazeOrigin is not 0 and write it to DataScript in meters
-        if (gazeOrigin != Vector3.zero)
-        {
-            //Debug.Log("Gaze Origin: " + gazeOrigin);
-            //DataScript.GazeOrigin = gazeOrigin / 1000;
-            DataScript.GazeOrigin = eyeData.verbose_data.right.gaze_origin_mm / 1000;
-        }
-
     }
 }

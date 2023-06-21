@@ -21,17 +21,16 @@ public class GazePositionCalculator : MonoBehaviour
     void Update()
     {
         // Avoids division with 0
-        if (DataScript.AverageGazeDirection.z != 0)
+        if (DataScript.GazeDirection.z != 0)
         {
             // Calculating Collision of Gaze Vector with the Text-Plane
 
-            float rValue = (distanceFromCamera - DataScript.GazeOrigin.z) / DataScript.AverageGazeDirection.z;
+            float rValue = (distanceFromCamera - DataScript.GazeOrigin.z) / DataScript.GazeDirection.z;
 
-            Vector3 hitPoint = DataScript.GazeOrigin + rValue * DataScript.AverageGazeDirection;
+            Vector3 hitPoint = DataScript.GazeOrigin + rValue * DataScript.GazeDirection;
 
             // Correct for mirroring
             hitPoint.x = hitPoint.x * -1;
-
 
             if (showPointer)
             {

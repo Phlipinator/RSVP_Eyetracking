@@ -22,13 +22,18 @@ public class Simple_RSVP : MonoBehaviour
         pauseInterval = 1/(speed/60f);
         Debug.Log("Current Pause Interval: " + pauseInterval);
 
+        DataScript.Wpm = speed;
+
         StartCoroutine(RSVP_Display());
 
     }
 
     IEnumerator  RSVP_Display(){
+        DataScript.Phase = "calibration";
         // Wait before start
         yield return new WaitForSeconds(startPause);
+
+        DataScript.Phase = "test";
 
         foreach (var word in inputArray)
         {

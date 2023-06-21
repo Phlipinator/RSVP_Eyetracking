@@ -6,9 +6,12 @@ public static class DataScript
 {
     private static float dilation_L;
     private static float dilation_R;
-    private static Vector3 averageGazeDirection;  
+    private static Vector3 gazeDirection;
     private static Vector3 gazeOrigin;
     private static Vector3 hitPoint;
+    private static string calculationMethod;
+    private static int wpm;
+    private static string phase;
 
     public static float Dilation_L
     {
@@ -36,21 +39,20 @@ public static class DataScript
         }
     }
 
-    
-    public static Vector3 AverageGazeDirection
+    public static Vector3 GazeDirection
     {
         get
         {
-            return averageGazeDirection;
+            return gazeDirection;
         }
 
         set
         {
-            averageGazeDirection = value;
+            gazeDirection = value;
         }
     }
 
-     public static Vector3 GazeOrigin
+    public static Vector3 GazeOrigin
     {
         get
         {
@@ -63,7 +65,8 @@ public static class DataScript
         }
     }
 
-       public static Vector3 HitPoint
+    // Store the gaze Position
+    public static Vector3 HitPoint
     {
         get
         {
@@ -75,4 +78,48 @@ public static class DataScript
             hitPoint = value;
         }
     }
+
+    // Can be either A vor average or L/R for left and right
+    public static string CalculationMethod
+    {
+        get
+        {
+            return calculationMethod;
+        }
+
+        set
+        {
+            calculationMethod = value;
+        }
+    }
+
+    // Stores the spped in words per minute
+    public static int Wpm
+    {
+        get
+        {
+            return wpm;
+        }
+
+        set
+        {
+            wpm = value;
+        }
+    }
+
+    // Stores the active phase
+    // Can either be calibration or test
+    public static string Phase
+    {
+        get
+        {
+            return phase;
+        }
+
+        set
+        {
+            phase = value;
+        }
+    }
+
 }

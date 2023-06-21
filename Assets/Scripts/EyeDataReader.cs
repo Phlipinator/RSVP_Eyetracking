@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // This Script was found here:
 // https://forum.htc.com/topic/9341-vive-eye-tracking-at-120hz/
 
-public class PupilDilationReader : MonoBehaviour
+public class EyeDataReader : MonoBehaviour
 {
     private static EyeData eyeData = new EyeData();
     private static bool eye_callback_registered = false;
@@ -76,17 +76,74 @@ public class PupilDilationReader : MonoBehaviour
         float leftPupilDiameter = eyeData.verbose_data.left.pupil_diameter_mm;
         float rightPupilDiameter = eyeData.verbose_data.right.pupil_diameter_mm;
 
-
-        // Print the pupil diameter values to the console
-        if (leftPupilDiameter != -1){
-            Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
+        // Check if diameter is not zero and write to DataScript
+        if (leftPupilDiameter != -1)
+        {
+            //Debug.Log("Left Pupil Diameter: " + leftPupilDiameter);
             DataScript.Dilation_L = leftPupilDiameter;
         }
-        
-        if (rightPupilDiameter != -1){
-            Debug.Log("Right Pupil Diameter: " + rightPupilDiameter);
+
+        if (rightPupilDiameter != -1)
+        {
+            //Debug.Log("Right Pupil Diameter: " + rightPupilDiameter);
             DataScript.Dilation_R = rightPupilDiameter;
         }
 
+
+        // Allows switching between Avergae Eye Data or left/right
+        switch (DataScript.CalculationMethod)
+        {
+            case "A":
+                // Retrieve the average gaze direction from both eyes
+                Vector3 gazeDirection = (eyeData.verbose_data.left.gaze_direction_normalized + eyeData.verbose_data.right.gaze_direction_normalized) / 2;
+
+                if (gazeDirection != Vector3.zero)
+                {
+                    DataScript.GazeDirection = gazeDirection;
+                }
+
+                // Get average gazeOrigin
+                Vector3 gazeOrigin = (eyeData.verbose_data.left.gaze_origin_mm + eyeData.verbose_data.right.gaze_origin_mm) / 2;
+
+                if (gazeOrigin != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin;
+                }
+                break;
+
+            case "L":
+                Vector3 gazeDirection_L = eyeData.verbose_data.left.gaze_direction_normalized;
+
+                if (gazeDirection_L != Vector3.zero){
+                    DataScript.GazeDirection = gazeDirection_L;
+                }
+
+                Vector3 gazeOrigin_L = eyeData.verbose_data.left.gaze_origin_mm / 1000;
+
+                if (gazeOrigin_L != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin_L;
+                }
+                break;
+
+            case "R":
+                Vector3 gazeDirection_R = eyeData.verbose_data.right.gaze_direction_normalized;
+
+                if (gazeDirection_R != Vector3.zero){
+                    DataScript.GazeDirection = gazeDirection_R;
+                }
+
+                Vector3 gazeOrigin_R = eyeData.verbose_data.right.gaze_origin_mm / 1000;
+
+                if (gazeOrigin_R != Vector3.zero)
+                {
+                    DataScript.GazeOrigin = gazeOrigin_R;
+                }
+                break;
+                
+            default:
+                Debug.Log("Error: No calculation Method selected!");
+                break;
+        }
     }
 }

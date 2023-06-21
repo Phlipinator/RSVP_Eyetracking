@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 737868386}
   - component: {fileID: 737868387}
   - component: {fileID: 737868388}
+  - component: {fileID: 737868389}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -283,6 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participant_ID: 0
+  calculationMethod: R
+  backgroundColor: B
 --- !u!114 &737868387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +313,23 @@ MonoBehaviour:
   gazeTarget: {fileID: 1027374957}
   pointer: {fileID: 30623811}
   showPointer: 1
+--- !u!114 &737868389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737868383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5d43f6d2186ae44960b207c255909b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 1507990884}
+  RSVP: {fileID: 1027374958}
+  whiteBG: {fileID: 2100000, guid: 6b5b5d1547f54af428fd8b977ef52838, type: 2}
+  greyBG: {fileID: 2100000, guid: 8661aeaa7437af34ab18ef5ed0fc0299, type: 2}
+  blackBG: {fileID: 2100000, guid: 9980641debb2dc84aab8bd3d13e6f05c, type: 2}
 --- !u!1 &1027374957
 GameObject:
   m_ObjectHideFlags: 0

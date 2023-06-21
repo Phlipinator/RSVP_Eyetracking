@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DataExport : MonoBehaviour
 {
     public int participant_ID;
     public string calculationMethod;
+    public string backgroundColor;
 
     private string activeScene;
     private string filename;
@@ -14,8 +14,6 @@ public class DataExport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize active Scene Name
-        activeScene = SceneManager.GetActiveScene().name;
 
         calculationMethod = calculationMethod.ToUpper();
         switch (calculationMethod)
@@ -37,13 +35,35 @@ public class DataExport : MonoBehaviour
                 break;
         }
 
+        backgroundColor = backgroundColor.ToUpper();
+        switch (backgroundColor){
+            case "W":
+                DataScript.BackgroundColor = "W";
+                Debug.Log("Using White as Background");
+                break;
+
+            case "G":
+                DataScript.BackgroundColor = "G";
+                Debug.Log("Using Grey as Background");
+                break;
+            case "B":
+
+                DataScript.BackgroundColor = "B";
+                Debug.Log("Using Black as Background");
+                break;
+
+            default:
+                Debug.Log("Invalid Background Color selected! Please only enter 'W', 'G' or 'B'");
+                break;
+        }
+
         // Set the filename based on the participant ID
         filename = "Participant_" + participant_ID + ".csv";
 
         // Create the CSV file if it doesn't exist and write the headers
         if (!File.Exists(GetFilePath(filename)))
         {
-            string[] headers = { "calculationMethod", "scene", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
+            string[] headers = { "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
             AppendToCSV(filename, headers);
         }
     }
@@ -58,7 +78,7 @@ public class DataExport : MonoBehaviour
         // Create a string array with the data to append
         string[] data = {
             DataScript.CalculationMethod,
-            activeScene,
+            DataScript.BackgroundColor,
             DataScript.Wpm.ToString(),
             DataScript.Phase,
             dilation_L,

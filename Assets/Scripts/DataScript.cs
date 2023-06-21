@@ -12,6 +12,7 @@ public static class DataScript
     private static string calculationMethod;
     private static int wpm;
     private static string phase;
+    private static string backgroundColor;
 
     public static float Dilation_L
     {
@@ -119,6 +120,21 @@ public static class DataScript
         set
         {
             phase = value;
+        }
+    }
+
+    // Stores the active Background color
+    //can either be W for White, G for Grey or B for Black
+    public static string BackgroundColor
+    {
+        get
+        {
+            return backgroundColor;
+        }
+
+        set
+        {
+            backgroundColor = value;
         }
     }
 

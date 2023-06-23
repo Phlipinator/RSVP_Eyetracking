@@ -69,4 +69,4 @@ Needs to be assigned the BG-Object.
 Neds to be assigned the Text-Object.
 
 #### White/Grey/Black BG ####
-Need to bve assigned to the respective Materials.
+Need to be assigned to the respective Materials.

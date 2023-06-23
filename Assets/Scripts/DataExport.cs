@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataExport : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DataExport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        activeScene = SceneManager.GetActiveScene().name;
 
         calculationMethod = calculationMethod.ToUpper();
         switch (calculationMethod)
@@ -63,7 +65,7 @@ public class DataExport : MonoBehaviour
         // Create the CSV file if it doesn't exist and write the headers
         if (!File.Exists(GetFilePath(filename)))
         {
-            string[] headers = { "textFile", "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
+            string[] headers = { "startPasue", "activeScene", "textFile", "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
             AppendToCSV(filename, headers);
         }
     }
@@ -77,6 +79,8 @@ public class DataExport : MonoBehaviour
 
         // Create a string array with the data to append
         string[] data = {
+            DataScript.StartPause.ToString(),
+            activeScene,
             DataScript.ActiveTextFile,
             DataScript.CalculationMethod,
             DataScript.BackgroundColor,

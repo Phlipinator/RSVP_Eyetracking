@@ -12,27 +12,66 @@ public class Simple_RSVP : MonoBehaviour
     public int speed;
     public int startPause;
     public string textFile;
+    public bool useSpecificFile;
 
     private string[] inputArray;
     private float pauseInterval;
 
     private void Start()
     {
-        // Handle file selection either using a random file or a specific one
         string directory = "Assets/TextFiles/";
-        //string[] textFiles = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+        string randomOrderFile = directory + "RandomOrder.txt";
+        DataScript.StartPause = startPause;
 
-        DataScript.ActiveTextFile = textFile;
-
-        readTextFile(directory + textFile + ".txt");
-        Debug.Log("Using File " + textFile);
-
-
+        // Handle Speed Selection
+        DataScript.Wpm = speed;
         // Convert words per minute into seconds between words
         pauseInterval = 1 / (speed / 60f);
         Debug.Log("Current Pause Interval: " + pauseInterval);
 
-        DataScript.Wpm = speed;
+        // Either use a specific File or the randomly generated order
+        if (useSpecificFile)
+        {
+            DataScript.ActiveTextFile = textFile;
+
+            inputArray = readFile(directory + textFile + ".txt").Split(' ');
+            Debug.Log("Using File " + textFile);
+        }
+        else
+        {
+            // TODO: Creates error where empty line is created after deleting the first char
+
+            // Get the random Order from the txt file and convert it to an array
+            string randomOrder = readFile(randomOrderFile);
+            char[] randomOrderArray = randomOrder.ToCharArray();
+
+            // Specify the used thext file for CSV export
+            DataScript.ActiveTextFile = randomOrderArray[0].ToString();
+            textFile = randomOrderArray[0].ToString();
+
+            inputArray = readFile(directory + textFile + ".txt").Split(' ');
+            Debug.Log("Using File " + textFile);
+
+            // Delete the first item in the array that has just been "used"
+            DeleteFirstItem(ref randomOrderArray);
+          
+            // Clear the txt file from previous uses
+            using (FileStream fileStream = new FileStream(randomOrderFile, FileMode.Truncate))
+            {
+                // Set the length of the file stream to 0 to clear its contents
+                fileStream.SetLength(0);
+            }
+
+            // Write the randomly generated order into a text file with one less file name
+            using (StreamWriter writer = new StreamWriter(randomOrderFile))
+            {
+                foreach (var file in randomOrderArray)
+                {
+                    writer.Write(file);
+                }
+            }
+
+        }
 
         StartCoroutine(RSVP_Display());
 
@@ -56,19 +95,20 @@ public class Simple_RSVP : MonoBehaviour
         }
     }
 
-    // Inspiration for this was found here:
-    // https://gamedev.stackexchange.com/questions/85807/how-to-read-a-data-from-text-file-in-unity
-    void readTextFile(string file_path)
+    string readFile(string filePath)
     {
-        StreamReader inp_stm = new StreamReader(file_path);
-
-        while (!inp_stm.EndOfStream)
+        using (StreamReader reader = new StreamReader(filePath))
         {
-            string inputPhrase = inp_stm.ReadLine();
-
-            inputArray = inputPhrase.Split(' ');
+            string content = reader.ReadToEnd();
+            return content;
         }
-
-        inp_stm.Close();
     }
+
+    static void DeleteFirstItem<T>(ref T[] array)
+    {
+        T[] newArray = new T[array.Length - 1];
+        Array.Copy(array, 1, newArray, 0, newArray.Length);
+        array = newArray;
+    }
+
 }

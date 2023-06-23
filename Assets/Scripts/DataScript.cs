@@ -14,6 +14,7 @@ public static class DataScript
     private static string phase;
     private static string backgroundColor;
     private static string activeTextFile;
+    private static int startPause;
 
     public static float Dilation_L
     {
@@ -150,6 +151,19 @@ public static class DataScript
         set
         {
             activeTextFile = value;
+        }
+    }
+
+    public static int StartPause
+    {
+        get
+        {
+            return startPause;
+        }
+
+        set
+        {
+            startPause = value;
         }
     }
 

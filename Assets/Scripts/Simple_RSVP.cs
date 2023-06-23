@@ -12,7 +12,6 @@ public class Simple_RSVP : MonoBehaviour
     public int speed;
     public int startPause;
     public string textFile;
-    public bool useRandomTextfile;
 
     private string[] inputArray;
     private float pauseInterval;
@@ -21,23 +20,16 @@ public class Simple_RSVP : MonoBehaviour
     {
         // Handle file selection either using a random file or a specific one
         string directory = "Assets/TextFiles/";
-        string[] textFiles = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+        //string[] textFiles = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
-        if(useRandomTextfile){
-            System.Random rnd = new System.Random();
-            int randomFile = rnd.Next(0, 9);
-            readTextFile(directory + textFiles[randomFile].ToString() + ".txt");
+        DataScript.ActiveTextFile = textFile;
 
-            Debug.Log("Using random File " + textFiles[randomFile].ToString());
+        readTextFile(directory + textFile + ".txt");
+        Debug.Log("Using File " + textFile);
 
-        }else{
-            readTextFile(directory + textFile + ".txt");
-            
-            Debug.Log("Using File " + textFile);
-        }
 
         // Convert words per minute into seconds between words
-        pauseInterval = 1/(speed/60f);
+        pauseInterval = 1 / (speed / 60f);
         Debug.Log("Current Pause Interval: " + pauseInterval);
 
         DataScript.Wpm = speed;
@@ -46,7 +38,8 @@ public class Simple_RSVP : MonoBehaviour
 
     }
 
-    IEnumerator  RSVP_Display(){
+    IEnumerator RSVP_Display()
+    {
         // Specify active phase before starting wait-timer
         DataScript.Phase = "calibration";
         // Wait before start
@@ -71,8 +64,8 @@ public class Simple_RSVP : MonoBehaviour
 
         while (!inp_stm.EndOfStream)
         {
-            string inputPhrase = inp_stm.ReadLine(); 
-            
+            string inputPhrase = inp_stm.ReadLine();
+
             inputArray = inputPhrase.Split(' ');
         }
 

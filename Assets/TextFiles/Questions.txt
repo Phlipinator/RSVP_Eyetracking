@@ -1,3 +1,4 @@
+0	Vögel können Farben nicht gut sehen.
 1	Die Mäuse verließen um Mitternacht den Keller.
 2	Bieber können 30 Minuten unter Wasser bleiben.
 3	Bäume können überall wachsen.
@@ -7,4 +8,3 @@
 7	Insel können entstehen, wenn der Wasserspiegel sinkt.
 8	Spinnen können 2 Arten von Fäden spinnen.
 9	Alle Tiere müssen ihre Lebensweise über den Winter ändern.
-10	Vögel können Farben nicht gut sehen.

@@ -256,7 +256,7 @@ MonoBehaviour:
   display: {fileID: 1027374958}
   speed: 300
   startPause: 0
-  textFile: 1
+  textFile: 6
   useSpecificFile: 0
 --- !u!4 &737868385
 Transform:

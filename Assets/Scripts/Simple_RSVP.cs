@@ -36,45 +36,50 @@ public class Simple_RSVP : MonoBehaviour
 
             inputArray = readFile(directory + textFile + ".txt").Split(' ');
             Debug.Log("Using File " + textFile);
+
+            StartCoroutine(RSVP_Display());
         }
         else
         {
-            // TODO: Creates error where empty line is created after deleting the first char
-
-            // Get the random Order from the txt file and convert it to an array
-            string randomOrder = readFile(randomOrderFile);
+            // Get the random Order from the txt file and convert it to an array while removing initial linebreaks or whitespaces
+            string randomOrder = readFile(randomOrderFile).Trim();
             char[] randomOrderArray = randomOrder.ToCharArray();
 
-            // Specify the used thext file for CSV export
-            DataScript.ActiveTextFile = randomOrderArray[0].ToString();
-            textFile = randomOrderArray[0].ToString();
-
-            inputArray = readFile(directory + textFile + ".txt").Split(' ');
-            Debug.Log("Using File " + textFile);
-
-            // Delete the first item in the array that has just been "used"
-            DeleteFirstItem(ref randomOrderArray);
-          
-            // Clear the txt file from previous uses
-            using (FileStream fileStream = new FileStream(randomOrderFile, FileMode.Truncate))
+            if (randomOrderArray.Length != 0)
             {
-                // Set the length of the file stream to 0 to clear its contents
-                fileStream.SetLength(0);
-            }
+                // Specify the used thext file for CSV export
+                DataScript.ActiveTextFile = randomOrderArray[0].ToString();
+                textFile = randomOrderArray[0].ToString();
 
-            // Write the randomly generated order into a text file with one less file name
-            using (StreamWriter writer = new StreamWriter(randomOrderFile))
-            {
-                foreach (var file in randomOrderArray)
+                inputArray = readFile(directory + textFile + ".txt").Split(' ');
+                Debug.Log("Using File " + textFile);
+
+                // Delete the first item in the array that has just been "used"
+                DeleteFirstItem(ref randomOrderArray);
+
+                // Clear the txt file from previous uses
+                using (FileStream fileStream = new FileStream(randomOrderFile, FileMode.Truncate))
                 {
-                    writer.Write(file);
+                    // Set the length of the file stream to 0 to clear its contents
+                    fileStream.SetLength(0);
                 }
+
+                // Write the randomly generated order into a text file with one less file name
+                using (StreamWriter writer = new StreamWriter(randomOrderFile))
+                {
+                    foreach (var file in randomOrderArray)
+                    {
+                        writer.Write(file);
+                    }
+                }
+
+                StartCoroutine(RSVP_Display());
             }
-
+            else
+            {
+                Debug.Log("No more files left!");
+            }
         }
-
-        StartCoroutine(RSVP_Display());
-
     }
 
     IEnumerator RSVP_Display()

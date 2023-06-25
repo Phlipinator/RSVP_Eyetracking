@@ -1,10 +1,10 @@
-0	Vögel können Farben nicht gut sehen.
-1	Die Mäuse verließen um Mitternacht den Keller.
-2	Bieber können 30 Minuten unter Wasser bleiben.
-3	Bäume können überall wachsen.
-4	Spinnen verzerren ihre Beute immer sofort.
-5	Frösche nutzen die Regenzeit zum schlafen.
-6	Das Gift von Tieren ist nicht immer tödlich.
-7	Insel können entstehen, wenn der Wasserspiegel sinkt.
-8	Spinnen können 2 Arten von Fäden spinnen.
-9	Alle Tiere müssen ihre Lebensweise über den Winter ändern.
+0	Vögel können Farben nicht gut sehen.				FALSCH
+1	Die Mäuse verließen um Mitternacht den Keller.			RICHTIG
+2	Bieber können 30 Minuten unter Wasser bleiben.			FALSCH
+3	Bäume können überall wachsen.					FALSCH
+4	Spinnen verzerren ihre Beute immer sofort.			FALSCH
+5	Frösche nutzen die Regenzeit zum schlafen.			FALSCH
+6	Das Gift von Tieren ist nicht immer tödlich.			RICHTIG
+7	Insel können entstehen, wenn der Wasserspiegel sinkt.		RICHTIG
+8	Spinnen können 2 Arten von Fäden spinnen.			RICHTIG
+9	Alle Tiere müssen ihre Lebensweise über den Winter ändern.	FALSCH

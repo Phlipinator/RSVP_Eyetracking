@@ -36,10 +36,11 @@ Adjust the speed in words per minute
 Adjust the initial pause timer at the beginning (in seconds)
 
 #### Text File ####
-Specify a Textfile (1-10) to be used during testing.
+Specify a Textfile (0-9) to be used during testing. Only works if *Use Specific File* is set to true.
 
-#### Use random Textfile ####
-Uses a random Textfile instead of a specified one. Overrides *Textfile* when active.
+#### Use Specific File ####
+Uses a specific Textfile (specified with the value above) instead of a following the randomized order.
+Careful: The random order only works if the txt-file *RandomOrder* contains a random order that was generated in the *Normal_Reading* Scene.
 
 ### Data Export ###
 #### Participant_ID ####
@@ -70,3 +71,7 @@ Neds to be assigned the Text-Object.
 
 #### White/Grey/Black BG ####
 Need to be assigned to the respective Materials.
+
+## NormalReading ##
+This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 10 (0-9) textfiles is generated. The first one gets used as a file for the scene the remaining 9 get saved into the *RandomOrder* txt file to use in the *RSVP* scene.  
+All variables are analog to the ones specified above.

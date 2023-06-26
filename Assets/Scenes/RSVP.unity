@@ -255,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   display: {fileID: 1027374958}
   speed: 300
-  startPause: 0
+  startPause: 15
   textFile: 6
   useSpecificFile: 0
 --- !u!4 &737868385
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gazeTarget: {fileID: 1027374957}
   pointer: {fileID: 30623811}
-  showPointer: 1
+  showPointer: 0
 --- !u!114 &737868389
 MonoBehaviour:
   m_ObjectHideFlags: 0

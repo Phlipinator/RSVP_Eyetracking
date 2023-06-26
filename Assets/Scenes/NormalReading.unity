@@ -258,7 +258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sample text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34dcbb23ce4aa2841a9900b2fb9309c2, type: 2}
   m_sharedMaterial: {fileID: 3688118270908065120, guid: 34dcbb23ce4aa2841a9900b2fb9309c2, type: 2}
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   participant_ID: 0
-  calculationMethod: R
+  calculationMethod: A
   backgroundColor: B
 --- !u!114 &737868387
 MonoBehaviour:
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gazeTarget: {fileID: 643965660}
   pointer: {fileID: 30623811}
-  showPointer: 1
+  showPointer: 0
 --- !u!114 &737868389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,7 +500,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   display: {fileID: 643965661}
-  startPause: 0
+  startPause: 15
+  generateNewRandomOrder: 1
 --- !u!1 &1271843396
 GameObject:
   m_ObjectHideFlags: 0

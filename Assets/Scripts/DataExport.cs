@@ -65,7 +65,7 @@ public class DataExport : MonoBehaviour
         // Create the CSV file if it doesn't exist and write the headers
         if (!File.Exists(GetFilePath(filename)))
         {
-            string[] headers = { "startPasue", "activeScene", "textFile", "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
+            string[] headers = { "startPause", "activeScene", "textFile", "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
             AppendToCSV(filename, headers);
         }
     }

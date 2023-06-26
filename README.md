@@ -73,5 +73,9 @@ Neds to be assigned the Text-Object.
 Need to be assigned to the respective Materials.
 
 ## NormalReading ##
-This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 10 (0-9) textfiles is generated. The first one gets used as a file for the scene the remaining 9 get saved into the *RandomOrder* txt file to use in the *RSVP* scene.  
-All variables are analog to the ones specified above.
+This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 12 (a - l) textfiles is generated. The first one gets used as a file for the scene the remaining 11 get saved into the *RandomOrder* txt file to use in the *RSVP* scene.
+
+### GenerateNewRandomOrder ###
+When set to true a new random order is generated and saved in to the *RandomOrder* txt file like described above. When set to false the first file in the *RandomOrder* file gets used and the remaining ones get saved into the file like in the *RSVP* scene.  
+
+All other variables are analog to the ones specified above.

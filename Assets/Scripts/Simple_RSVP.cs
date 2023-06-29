@@ -98,6 +98,9 @@ public class Simple_RSVP : MonoBehaviour
             yield return new WaitForSeconds(pauseInterval);
 
         }
+        
+        // Specify phase as "finished" once RSVP is done
+        DataScript.Phase = "finished";
     }
 
     string readFile(string filePath)

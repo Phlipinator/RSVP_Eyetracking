@@ -23,7 +23,7 @@ public class EnvironmentChanger : MonoBehaviour
         {
             case "W":
                 BG.GetComponent<MeshRenderer>().material = whiteBG;
-                RSVP.color = grey;
+                RSVP.color = black;
                 break;
             case "G":
                 BG.GetComponent<MeshRenderer>().material = greyBG;

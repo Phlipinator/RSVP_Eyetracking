@@ -254,9 +254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   display: {fileID: 1027374958}
-  speed: 300
+  speed: 350
   startPause: 15
-  textFile: 6
+  textFile: h
   useSpecificFile: 0
 --- !u!4 &737868385
 Transform:
@@ -285,9 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3195ba41fbdc34b4383aef5c9fa61fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  participant_ID: 0
-  calculationMethod: R
-  backgroundColor: B
+  participant_ID: 4
+  calculationMethod: A
+  backgroundColor: G
 --- !u!114 &737868387
 MonoBehaviour:
   m_ObjectHideFlags: 0

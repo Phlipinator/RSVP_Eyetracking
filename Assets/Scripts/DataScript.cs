@@ -82,20 +82,6 @@ public static class DataScript
         }
     }
 
-    // Can be either A vor average or L/R for left and right
-    public static string CalculationMethod
-    {
-        get
-        {
-            return calculationMethod;
-        }
-
-        set
-        {
-            calculationMethod = value;
-        }
-    }
-
     // Stores the spped in words per minute
     public static int Wpm
     {
@@ -125,20 +111,6 @@ public static class DataScript
         }
     }
 
-    // Stores the active Background color
-    //can either be W for White, G for Grey or B for Black
-    public static string BackgroundColor
-    {
-        get
-        {
-            return backgroundColor;
-        }
-
-        set
-        {
-            backgroundColor = value;
-        }
-    }
 
     // Stores the used text file
     public static string ActiveTextFile

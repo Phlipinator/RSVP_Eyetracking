@@ -82,7 +82,7 @@ public static class DataScript
         }
     }
 
-    // Stores the spped in words per minute
+    // Stores the speed in words per minute
     public static int Wpm
     {
         get
@@ -97,7 +97,7 @@ public static class DataScript
     }
 
     // Stores the active phase
-    // Can either be calibration or test
+    // Can either be calibration or test or finished
     public static string Phase
     {
         get

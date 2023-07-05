@@ -21,7 +21,7 @@ public class Normal_Reading : MonoBehaviour
         directory = "Assets/TextFiles/";
         string randomOrderFile = directory + "RandomOrder.txt";
 
-            string[] textFiles = new string[] { "a", "b", "c", "d", "e", "f", "g", "h"};
+            string[] textFiles = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i"};
 
             ShuffleArray(textFiles);
 

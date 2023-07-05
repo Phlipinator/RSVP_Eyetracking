@@ -27,14 +27,14 @@ public class Simple_RSVP : MonoBehaviour
         DataScript.Wpm = speed;
         // Convert words per minute into seconds between words
         pauseInterval = 1 / (speed / 60f);
-        Debug.Log("Current Pause Interval: " + pauseInterval);
+        // Debug.Log("Current Pause Interval: " + pauseInterval);
 
         // Either use a specific File or the randomly generated order
         if (useSpecificFile)
         {
             DataScript.ActiveTextFile = textFile;
 
-            inputArray = readFile(directory + textFile + ".txt").Split(' ');
+            inputArray = readFile(directory + "MainStudy_1/" + textFile + ".txt").Split(' ');
             Debug.Log("Using File " + textFile);
 
             StartCoroutine(RSVP_Display());
@@ -51,7 +51,7 @@ public class Simple_RSVP : MonoBehaviour
                 DataScript.ActiveTextFile = randomOrderArray[0].ToString();
                 textFile = randomOrderArray[0].ToString();
 
-                inputArray = readFile(directory + textFile + ".txt").Split(' ');
+                inputArray = readFile(directory + "MainStudy_1/" + textFile + ".txt").Split(' ');
                 Debug.Log("Using File " + textFile);
 
                 // Delete the first item in the array that has just been "used"

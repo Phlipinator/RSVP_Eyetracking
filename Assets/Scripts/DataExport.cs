@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 public class DataExport : MonoBehaviour
 {
     public int participant_ID;
-    public string calculationMethod;
-    public string backgroundColor;
-
     private string activeScene;
     private string filename;
 
@@ -17,55 +14,13 @@ public class DataExport : MonoBehaviour
     {
         activeScene = SceneManager.GetActiveScene().name;
 
-        calculationMethod = calculationMethod.ToUpper();
-        switch (calculationMethod)
-        {
-            case "A":
-                DataScript.CalculationMethod = "A";
-                Debug.Log("Average Eye Data is used");
-                break;
-            case "L":
-                DataScript.CalculationMethod = "L";
-                Debug.Log("Left Eye Data is used");
-                break;
-            case "R":
-                DataScript.CalculationMethod = "R";
-                Debug.Log("Right Eye Data is used");
-                break;
-            default:
-                Debug.Log("Invalid Calculation Method selected! Please only enter 'A', 'L' or 'R'");
-                break;
-        }
-
-        backgroundColor = backgroundColor.ToUpper();
-        switch (backgroundColor){
-            case "W":
-                DataScript.BackgroundColor = "W";
-                Debug.Log("Using White as Background");
-                break;
-
-            case "G":
-                DataScript.BackgroundColor = "G";
-                Debug.Log("Using Grey as Background");
-                break;
-            case "B":
-
-                DataScript.BackgroundColor = "B";
-                Debug.Log("Using Black as Background");
-                break;
-
-            default:
-                Debug.Log("Invalid Background Color selected! Please only enter 'W', 'G' or 'B'");
-                break;
-        }
-
         // Set the filename based on the participant ID
         filename = "Participant_" + participant_ID + ".csv";
 
         // Create the CSV file if it doesn't exist and write the headers
         if (!File.Exists(GetFilePath(filename)))
         {
-            string[] headers = { "startPause", "activeScene", "textFile", "calculationMethod", "backgroundColor", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
+            string[] headers = { "startPause", "activeScene", "textFile", "speed","phase","pupilDilation_L", "pupilDilation_R", "gazePosition" };
             AppendToCSV(filename, headers);
         }
     }
@@ -82,8 +37,6 @@ public class DataExport : MonoBehaviour
             DataScript.StartPause.ToString(),
             activeScene,
             DataScript.ActiveTextFile,
-            DataScript.CalculationMethod,
-            DataScript.BackgroundColor,
             DataScript.Wpm.ToString(),
             DataScript.Phase,
             dilation_L,

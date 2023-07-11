@@ -20,13 +20,9 @@ https://developer.tobii.com/xr/develop/xr-sdk/getting-started/vive-pro-eye/
 Under *Assets/ViveSR/Scenes/Eye* you can find two Sample scenes provided by the SDK that show a basic mirror avatar to check if eye tracking is working properly.  
 The other relevant scenes can be found under *Assets/Scenes*
 
-## Pupil Dilation ##
-This Scene is just a quick demonstrator to display the Left and Right Pupil dilation in mm in realtime.  
-There is no need to adjust anything.
-
 ## RSVP ##
-All data this Scene collects is saved under *Assets/CSV*. Currently the *calculation method*, *background color*, *speed in WPM*, *phase* (either calibration or testing), *left pupil Dilation*, *right pupil Dilation* and the *gaze position* are saved under *participant_ID.cvs*.
-This scene offers a lot of customization within the editor. Everything can be adjusted on the *Manager*-Object within the scene.  
+All data this Scene collects is saved under *Assets/CSV*. Currently the *startPause*, *activeScene*, *textFile*, *speed*, *phase*, *pupil dilation L/R* and *gaze position* are saved under *participant_ID.cvs*.
+This scene offers some customization within the editor. Everything can be adjusted on the *Manager*-Object within the scene.  
 
 ### Simple_RSVP ###
 #### Speed ####
@@ -46,12 +42,6 @@ Careful: The random order only works if the txt-file *RandomOrder* contains a ra
 #### Participant_ID ####
 Specifies the Participant ID in the created *CSV-File*
 
-#### Calculation Method ####
-Can either be *A* to use the average eye data or *L* / *R* to use Left or Right eye data.
-
-#### Backgorund Color ####
-Can either be *W* for white background with grey text, *G* for grey background with black text or *B* for black background with grey text.
-
 ### Gaze Position Calculator ###
 #### Gaze Target ####
 Needs to be assigned the Text-Object.
@@ -62,20 +52,8 @@ Needs to be assigned the Poinzter Object (could be any 3D object).
 #### Show Pointer ####
 Toggle Pointer on or off.
 
-### Environment Changer ###
-#### BG ####
-Needs to be assigned the BG-Object.
-
-#### RSVP ####
-Neds to be assigned the Text-Object.
-
-#### White/Grey/Black BG ####
-Need to be assigned to the respective Materials.
-
 ## NormalReading ##
-This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 12 (a - l) textfiles is generated. The first one gets used as a file for the scene the remaining 11 get saved into the *RandomOrder* txt file to use in the *RSVP* scene.
+This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 9 (a - i) textfiles is generated and saved into the *RandomOrder* txt file to use in the *RSVP* scene. The *NormalReading* scene always uses the same textfile (NormalReading.txt).
 
-### GenerateNewRandomOrder ###
-When set to true a new random order is generated and saved in to the *RandomOrder* txt file like described above. When set to false the first file in the *RandomOrder* file gets used and the remaining ones get saved into the file like in the *RSVP* scene.  
 
 All other variables are analog to the ones specified above.

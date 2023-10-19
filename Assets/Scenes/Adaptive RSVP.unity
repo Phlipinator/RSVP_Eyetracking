@@ -308,11 +308,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   display: {fileID: 1027374958}
-  startPause: 5
+  startPause: 15
   textFile: a
   useSpecificFile: 1
   speedIncrement: 20
   numberOfDatapoints: 50
+  startSpeed: 200
 --- !u!1 &1027374957
 GameObject:
   m_ObjectHideFlags: 0

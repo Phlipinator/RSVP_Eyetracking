@@ -15,6 +15,7 @@ public class Adaptive_RSVP : MonoBehaviour
     public bool useSpecificFile;
     public int speedIncrement;
     public int numberOfDatapoints;
+    public int startSpeed;
 
     private string[] inputArray;
     private int counter;
@@ -28,7 +29,7 @@ public class Adaptive_RSVP : MonoBehaviour
         string randomOrderFile = directory + "RandomOrder.txt";
         DataScript.StartPause = startPause;
         // Starting with 200 wpm as start speed
-        DataScript.Wpm = 200;
+        DataScript.Wpm = startSpeed;
 
         counter = 0;
         pupilValue = 0;

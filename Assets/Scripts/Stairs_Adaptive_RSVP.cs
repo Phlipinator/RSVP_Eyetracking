@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using TMPro;
+using System.Linq;
 
 public class Stairs_Adaptive_RSVP : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
     private int counter;
     private float pupilValue;
     private float pupilValueOld;
+    private float pupilBaseline;
+    private float standardDeviation;
+    private List<float> calibrationData;
 
 
     private void Start()
@@ -34,6 +38,9 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
         counter = 0;
         pupilValue = 0;
         pupilValueOld = 0;
+        pupilBaseline = 0;
+        standardDeviation = 0;
+        calibrationData = new List<float>();
 
         // Either use a specific File or the randomly generated order
         if (useSpecificFile)
@@ -90,49 +97,32 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
 
     private void Update()
     {
-        // Check if the number of datapoints has been reached already
-        if (counter != numberOfDatapoints)
+        if (DataScript.Phase == "calibration")
         {
-            pupilValue = pupilValue + DataScript.Dilation_L;
-            counter++;
+            calibrationData.Add(DataScript.Dilation_L);
         }
         else
         {
-            // Reset the counter
-            counter = 0;
-
-            // Check if there is a value to compare to
-            if (pupilValueOld == 0)
+            if (pupilBaseline == 0)
             {
-                pupilValueOld = pupilValue;
+                standardDeviation = CalculateStandardDeviation(calibrationData);
+
+                Debug.Log(standardDeviation);
+
+                float lowerEnd = calibrationData.Average() - 3 * standardDeviation;
+                float upperEnd = calibrationData.Average() + 3 * standardDeviation;
+
+                List<float> filteredCalibrationData = calibrationData
+                    .Where(dataPoint => dataPoint >= lowerEnd && dataPoint <= upperEnd)
+                    .ToList();
+                
+                pupilBaseline = filteredCalibrationData.Average();
             }
-            else
-            {
-                // Increase the speed if the pupil dilation is higher then the old value, decrese it if its lower
-                if (pupilValue >= pupilValueOld)
-                {
-                    DataScript.Wpm = DataScript.Wpm + speedIncrement;
-                    pupilValueOld = pupilValue;
-                    pupilValue = 0;
 
-                    Debug.Log("Speed changed to " + DataScript.Wpm);
-                }
-                else
-                {
-                    // Only decrease speed, if its higher than 200 wmp
-                    if (DataScript.Wpm > 200)
-                    {
-                        DataScript.Wpm = DataScript.Wpm - speedIncrement;
-
-                        Debug.Log("Speed changed to " + DataScript.Wpm);
-                    }
-                    pupilValueOld = pupilValue;
-                    pupilValue = 0;
-
-                }
-            }
+            // Rest goes here
         }
     }
+
 
     IEnumerator RSVP_Display()
     {
@@ -169,5 +159,11 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
         T[] newArray = new T[array.Length - 1];
         Array.Copy(array, 1, newArray, 0, newArray.Length);
         array = newArray;
+    }
+
+    static float CalculateStandardDeviation(IEnumerable<float> values)
+    {
+        float avg = (float)values.Average();
+        return (float)Math.Sqrt(values.Average(v => Math.Pow(v - avg, 2)));
     }
 }

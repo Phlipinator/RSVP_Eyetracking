@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using TMPro;
 
-public class Adaptive_RSVP : MonoBehaviour
+public class Simple_Adaptive_RSVP : MonoBehaviour
 {
 
     public TMP_Text display;
@@ -90,45 +90,49 @@ public class Adaptive_RSVP : MonoBehaviour
 
     private void Update()
     {
-        // Check if the number of datapoints has been reached already
-        if (counter != numberOfDatapoints)
+        // Only run after calibration
+        if (DataScript.Phase == "test")
         {
-            pupilValue = pupilValue + DataScript.Dilation_L;
-            counter++;
-        }
-        else
-        {
-            // Reset the counter
-            counter = 0;
-
-            // Check if there is a value to compare to
-            if (pupilValueOld == 0)
+            // Check if the number of datapoints has been reached already
+            if (counter != numberOfDatapoints)
             {
-                pupilValueOld = pupilValue;
+                pupilValue = pupilValue + DataScript.Dilation_L;
+                counter++;
             }
             else
             {
-                // Increase the speed if the pupil dilation is higher then the old value, decrese it if its lower
-                if (pupilValue >= pupilValueOld)
-                {
-                    DataScript.Wpm = DataScript.Wpm + speedIncrement;
-                    pupilValueOld = pupilValue;
-                    pupilValue = 0;
+                // Reset the counter
+                counter = 0;
 
-                    Debug.Log("Speed changed to " + DataScript.Wpm);
+                // Check if there is a value to compare to
+                if (pupilValueOld == 0)
+                {
+                    pupilValueOld = pupilValue;
                 }
                 else
                 {
-                    // Only decrease speed, if its higher than 200 wmp
-                    if (DataScript.Wpm > 200)
+                    // Increase the speed if the pupil dilation is higher then the old value, decrese it if its lower
+                    if (pupilValue >= pupilValueOld)
                     {
-                        DataScript.Wpm = DataScript.Wpm - speedIncrement;
+                        DataScript.Wpm = DataScript.Wpm + speedIncrement;
+                        pupilValueOld = pupilValue;
+                        pupilValue = 0;
 
                         Debug.Log("Speed changed to " + DataScript.Wpm);
                     }
-                    pupilValueOld = pupilValue;
-                    pupilValue = 0;
+                    else
+                    {
+                        // Only decrease speed, if its higher than 200 wmp
+                        if (DataScript.Wpm > 200)
+                        {
+                            DataScript.Wpm = DataScript.Wpm - speedIncrement;
 
+                            Debug.Log("Speed changed to " + DataScript.Wpm);
+                        }
+                        pupilValueOld = pupilValue;
+                        pupilValue = 0;
+
+                    }
                 }
             }
         }

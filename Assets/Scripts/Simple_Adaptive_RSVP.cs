@@ -40,7 +40,7 @@ public class Simple_Adaptive_RSVP : MonoBehaviour
         {
             DataScript.ActiveTextFile = textFile;
 
-            inputArray = readFile(directory + "MainStudy_1/" + textFile + ".txt").Split(' ');
+            inputArray = readFile(directory + "MainStudy_2/" + textFile + ".txt").Split(' ');
             Debug.Log("Using File " + textFile);
 
             StartCoroutine(RSVP_Display());
@@ -57,7 +57,7 @@ public class Simple_Adaptive_RSVP : MonoBehaviour
                 DataScript.ActiveTextFile = randomOrderArray[0].ToString();
                 textFile = randomOrderArray[0].ToString();
 
-                inputArray = readFile(directory + "MainStudy_1/" + textFile + ".txt").Split(' ');
+                inputArray = readFile(directory + "MainStudy_2/" + textFile + ".txt").Split(' ');
                 Debug.Log("Using File " + textFile);
 
                 // Delete the first item in the array that has just been "used"

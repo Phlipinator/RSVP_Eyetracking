@@ -15,16 +15,16 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
     public string textFile;
     public bool useSpecificFile;
     public int speedIncrement;
-    public int numberOfDatapoints;
     public int startSpeed;
 
     private string[] inputArray;
     private int counter;
-    private float pupilValue;
-    private float pupilValueOld;
     private float pupilBaseline;
-    private float standardDeviation;
     private List<float> calibrationData;
+    private int numberOfDataPoints;
+    private float idealDilation;
+    private float threshhold;
+    private bool fineTunig;
 
 
     private void Start()
@@ -36,11 +36,14 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
         DataScript.Wpm = startSpeed;
 
         counter = 0;
-        pupilValue = 0;
-        pupilValueOld = 0;
         pupilBaseline = 0;
-        standardDeviation = 0;
         calibrationData = new List<float>();
+        fineTunig = false;
+
+        // Waiting Period between steps
+        numberOfDataPoints = 450;
+        idealDilation = 0.21515628F;
+        threshhold = 0.05F;
 
         // Either use a specific File or the randomly generated order
         if (useSpecificFile)
@@ -105,9 +108,12 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
         {
             if (pupilBaseline == 0)
             {
-                standardDeviation = CalculateStandardDeviation(calibrationData);
+                // Drop the first 450 values
+                calibrationData.RemoveRange(0, 449);
 
-                Debug.Log(standardDeviation);
+                float standardDeviation = CalculateStandardDeviation(calibrationData);
+
+                Debug.Log("Current standard deviation: " + standardDeviation);
 
                 float lowerEnd = calibrationData.Average() - 3 * standardDeviation;
                 float upperEnd = calibrationData.Average() + 3 * standardDeviation;
@@ -115,11 +121,56 @@ public class Stairs_Adaptive_RSVP : MonoBehaviour
                 List<float> filteredCalibrationData = calibrationData
                     .Where(dataPoint => dataPoint >= lowerEnd && dataPoint <= upperEnd)
                     .ToList();
-                
+
                 pupilBaseline = filteredCalibrationData.Average();
+
+                Debug.Log("Current baseline: " + pupilBaseline);
             }
 
-            // Rest goes here
+            // Check if the number of datapoints has been reached already
+            if (counter != numberOfDataPoints)
+            {
+                counter++;
+            }
+            else
+            {
+                // Reset the counter
+                counter = 0;
+
+                float relativeDilation = DataScript.Dilation_L - pupilBaseline;
+
+                // Increase the speed if the pupil dilation is higher then the old value, decrease it if its lower
+                if (relativeDilation <= idealDilation && !fineTunig)
+                {
+                    DataScript.Wpm = DataScript.Wpm + speedIncrement;
+
+                    Debug.Log("Speed changed to " + DataScript.Wpm);
+                    Debug.Log("Current relative Dilation: " + (DataScript.Dilation_L - pupilBaseline));
+                }
+                else
+                {
+                    Debug.Log("Entering finetuning");
+                    fineTunig = true;
+
+                    if (relativeDilation >= idealDilation + threshhold)
+                    {
+                        DataScript.Wpm = DataScript.Wpm - speedIncrement / 2;
+
+                        Debug.Log("Speed finetuned to " + DataScript.Wpm);
+                    }
+                    else
+                    {
+                        if (relativeDilation <= idealDilation - threshhold)
+                        {
+                            DataScript.Wpm = DataScript.Wpm + speedIncrement / 2;
+
+                            Debug.Log("Speed finetuned to " + DataScript.Wpm);
+                        }
+
+                        // else do nothing, because we are within the ideal range
+                    }
+                }
+            }
         }
     }
 

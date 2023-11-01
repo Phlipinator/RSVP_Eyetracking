@@ -310,9 +310,8 @@ MonoBehaviour:
   display: {fileID: 1027374958}
   startPause: 15
   textFile: a
-  useSpecificFile: 1
+  useSpecificFile: 0
   speedIncrement: 20
-  numberOfDatapoints: 20
   startSpeed: 200
 --- !u!1 &1027374957
 GameObject:

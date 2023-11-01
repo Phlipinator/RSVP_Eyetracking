@@ -21,29 +21,29 @@ public class Normal_Reading : MonoBehaviour
         directory = "Assets/TextFiles/";
         string randomOrderFile = directory + "RandomOrder.txt";
 
-            string[] textFiles = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i"};
+        string[] textFiles = new string[] { "a", "b" };
 
-            ShuffleArray(textFiles);
+        ShuffleArray(textFiles);
 
-            Debug.Log("Random Order generated!");
-            DataScript.ActiveTextFile = "NormalReading";
+        Debug.Log("Random Order generated!");
+        DataScript.ActiveTextFile = "NormalReading";
 
-            // Clear the txt file from previous uses
-            using (FileStream fileStream = new FileStream(randomOrderFile, FileMode.Truncate))
+        // Clear the txt file from previous uses
+        using (FileStream fileStream = new FileStream(randomOrderFile, FileMode.Truncate))
+        {
+            // Set the length of the file stream to 0 to clear its contents
+            fileStream.SetLength(0);
+        }
+
+        // Write the randomly generated order into a txt file for use in the RSVP scene
+        foreach (var file in textFiles)
+        {
+            using (StreamWriter writer = new StreamWriter(randomOrderFile, true))
             {
-                // Set the length of the file stream to 0 to clear its contents
-                fileStream.SetLength(0);
+                writer.WriteLine(file);
             }
+        }
 
-            // Write the randomly generated order into a txt file for use in the RSVP scene
-            foreach (var file in textFiles)
-            {
-                using (StreamWriter writer = new StreamWriter(randomOrderFile, true))
-                {
-                    writer.WriteLine(file);
-                }
-            }
-        
         StartCoroutine(Display());
     }
 
@@ -74,7 +74,7 @@ public class Normal_Reading : MonoBehaviour
             return content;
         }
     }
-    
+
 
     IEnumerator Display()
     {
@@ -86,6 +86,6 @@ public class Normal_Reading : MonoBehaviour
         // Specify active phase before starting RSVP
         DataScript.Phase = "test";
 
-        display.text = readFile(directory + "MainStudy_1/NormalReading.txt");
+        display.text = readFile(directory + "MainStudy_2/NormalReading.txt");
     }
 }

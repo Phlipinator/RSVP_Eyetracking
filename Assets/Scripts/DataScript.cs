@@ -138,5 +138,4 @@ public static class DataScript
             startPause = value;
         }
     }
-
 }

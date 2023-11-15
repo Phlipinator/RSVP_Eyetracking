@@ -56,4 +56,22 @@ Toggle Pointer on or off.
 This scene is used as a baseline measurement of reading speed without RSVP. Upon activation a random order of 9 (a - i) textfiles is generated and saved into the *RandomOrder* txt file to use in the *RSVP* scene. The *NormalReading* scene always uses the same textfile (NormalReading.txt).
 
 
-All other variables are analog to the ones specified above.
+*All other variables are analog to the ones specified above.*
+
+## Adaptive RSVP simple ##
+All data this Scene collects is saved under *Assets/CSV*. Currently the *startPause*, *activeScene*, *textFile*, *speed*, *phase*, *pupil dilation L/R* and *gaze position* are saved under *participant_ID.cvs*.
+This scene offers some customization within the editor. Everything can be adjusted on the *Manager*-Object within the scene.
+
+This is a crude adaptive prototype, that will compare the average pupil dilation of x amount of datapoints to each other. If the dilation is increasiing, the speed gets increased, if its decreasing the speed gets lowered.
+
+### Simple_Adaptive_RSVP ###
+#### Speed Increment ####
+The increment in words per minute the speed gets changed.
+
+#### Number of Datapoints ####
+The amount of dataponits that gets compared in the adaptive system.
+
+#### Start Speed ####
+The speed at which the adaptive system starts.
+
+*All other variables are analog to the ones specified above.*
